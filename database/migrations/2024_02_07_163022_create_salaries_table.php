@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount',10,2)->default(0);
-            $table->unsignedBigInteger('emp_id')->comment('employee id');
-            $table->foreign('emp_id')->references('id')->on('employees');
+            $table->unsignedBigInteger('emp_id')->comment('employee id')->nullable();
+            $table->foreign('emp_id')->references('id')->on('employees')->onDelete('set null');
             $table->integer('bonus')->nullable();
             $table->timestamps();
         });

@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(EmployeeController::class)->group(function () {
     Route::get('/', 'index')->name('employees');
-    Route::post('employee/create', 'create')->name('employee_create');
-    Route::delete('delete/{id}', 'delete');
+    Route::post('/employee/create', 'create')->name('employee_create');
+    Route::get('/edit/{id}','edit')->name('employee_edit');
+    Route::delete('/delete/{id}', 'delete');
     Route::get('/search','search')->name('search_employee');
 });
