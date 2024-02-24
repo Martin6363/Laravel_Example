@@ -34,15 +34,20 @@ class EmployeeController extends Controller
 
 
     private function getSupervisors($employees) {
-        $superVisor = [];
-
+        $supervisors = [];
+    
         foreach ($employees as $employee) {
-            $supervisor = Employee::where('id', $employee->super_visor_id)->first();
-            $superVisor[$employee->id] = $supervisor;
+            $supervisorId = $employee->super_visor_id;
+            
+            $supervisor = Employee::where('id', $supervisorId)->distinct()->first();
+            if ($supervisor) {
+                $supervisors[$supervisorId] = $supervisor;
+            }
         }
-
-        return $superVisor;
+    
+        return $supervisors;
     }
+    
 
 
     public function create(Request $request) { 
@@ -59,11 +64,13 @@ class EmployeeController extends Controller
             $employee->company_id = $request->company_id;
             $employee->position_id = $request->position_id;
             $employee->super_visor_id = $request->super_visor;
-           
+            
+            $employee->save();
+
+
             $salary = new Salary;
             $salary->amount = $request->salary;
             $salary->emp_id = $employee->id;
-            $employee->save();
             $salary->save();
 
             DB::commit();
@@ -77,10 +84,39 @@ class EmployeeController extends Controller
 
 
     public function edit($id) {
-        $employee = Employee::find($id);
-        // $gender = Gender::where('id', $employee->gender_id)->first();
-        // $employee->gender_id = $gender->gender;
+        $employee = Employee::findOrFail($id);
+        $position = Position::where('id', $employee->position_id)->first();
+        $salary = Salary::where('emp_id', $employee->id)->first();
+        
+        $salaryAmount = $salary ? $salary->amount : null;
+
+        $employee->position = $position->name;
+        $employee->salary = $salaryAmount;
+
+        $employee->salary = $salary ? [
+            'amount' => $salary->amount,
+            'bonus' => $salary->bonus,
+        ] : null;
+
+        unset($employee->position_id);
         return response()->json($employee);
+    }
+
+    public function update(Request $request, $id) {
+        $employee = Employee::findOrFail($id);
+        $employee->update($request->all());
+        try {
+            $employee = Employee::findOrFail($id);
+            $employee->update($request->all());
+    
+            $salary = Salary::where('emp_id', $id)->firstOrFail();
+            $salary->update(['amount' => $request->salary]);
+
+            // $employee->update(['gender_id'=> $request->gender_id]);
+            return redirect()->back()->with(['success' => 'Employee updated successfully']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['error' => 'Failed to update employee']);
+        }
     }
 
     public function delete($id) {
@@ -113,15 +149,15 @@ class EmployeeController extends Controller
                             <label for="selectAll"></label>
                         </span>
                     </td>
-                    <td>'.$value->id.'</td>
-                    <td>'.$value->full_name.'</td>
-                    <td>'.$value->email.'</td>
-                    <td>'.$value->country.'</td>
-                    <td>'.$value->city.'</td>
-                    <td>'.$value->address.'</td>
-                    <td>'.$value->created_at.'</td>
+                    <td id="sort_by">'.$value->id.'</td>
+                    <td id="sort_by">'.$value->full_name.'</td>
+                    <td id="sort_by">'.$value->email.'</td>
+                    <td id="sort_by">'.$value->country.'</td>
+                    <td id="sort_by">'.$value->city.'</td>
+                    <td id="sort_by">'.$value->address.'</td>
+                    <td id="sort_by">'.$value->created_at.'</td>
                     <td>
-                        <a class="edit" data-bs-toggle="modal" data-bs-target="#editEmployeeModal">
+                        <a class="edit" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" data-id="'.$value->id.'">
                             <i class="fa-solid fa-pen" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
                         </a>
                         <a class="delete" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-id="'.$value->id.'">

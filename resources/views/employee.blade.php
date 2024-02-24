@@ -99,14 +99,50 @@
                                             <label for="selectAll"></label>
                                         </span>
                                     </th>
-                                    <th>ID</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Country</th>
-                                    <th>City</th>
-                                    <th>Address</th>
-                                    <th>Aded at</th>
-                                    <th>Action</th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-hashtag"></i>
+                                            ID
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-user"></i> Full Name
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-envelope"></i> Email
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-globe"></i> Country
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-city"></i> City
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-address-book"></i>
+                                            Address
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Created at
+                                        </div>    
+                                    </th>
+                                    <th id="sort_by">                                       
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-gear"></i>
+                                            Action
+                                        </div> 
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="table_tbody">
@@ -139,16 +175,52 @@
                             <thead>
                                 <tr style="background: rgba(0,0,0,0.5); color: #fff">
                                     <th>
-                                        {{-- Checkbox content... --}}
+                                        {{-- Content --}}
                                     </th>
-                                    <th>ID</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Country</th>
-                                    <th>City</th>
-                                    <th>Address</th>
-                                    <th>Aded at</th>
-                                    <th>Action</th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-hashtag"></i>
+                                            ID
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-user"></i> Full Name
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-envelope"></i> Email
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-globe"></i> Country
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-city"></i> City
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-address-book"></i>
+                                            Address
+                                        </div>
+                                    </th>
+                                    <th id="sort_by">
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Created at
+                                        </div>    
+                                    </th>
+                                    <th id="sort_by">                                       
+                                        <div class="th_cont">
+                                            <i class="fa-solid fa-gear"></i>
+                                            Action
+                                        </div> 
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -237,11 +309,9 @@
                                 <div class="box_select mt-2">
                                     <label for="director">Director</label>
                                     <select class="form-select form-select-sm" style="text-transform: capitalize;" id="director" name="super_visor">
-                                        @if ($item)
+                                        @foreach ($SuperVisor as $item)
                                             <option value="{{$item->id}}">{{$item->full_name}}</option>
-                                        @else
-                                            <option value="" disabled>No supervisor available</option>
-                                        @endif
+                                        @endforeach
                                     </select>  
                                 </div>
                                 <div class="box_select mt-2">
@@ -272,9 +342,10 @@
         <div id="editEmployeeModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="" method="POST">
+                    <form action="" method="POST" id="edit_form">
                         @csrf
                         {{ method_field('PUT') }}
+                        <input type="hidden" id="edit_id" name="edit_id">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Employee</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -332,11 +403,9 @@
                                 <div class="box_select mt-2">
                                     <label for="director">Director</label>
                                     <select class="form-select form-select-sm" style="text-transform: capitalize;" id="director" name="super_visor">
-                                        @if ($item)
+                                        @foreach ($SuperVisor as $item)
                                             <option value="{{$item->id}}">{{$item->full_name}}</option>
-                                        @else
-                                            <option value="" disabled>No supervisor available</option>
-                                        @endif
+                                        @endforeach
                                     </select>  
                                 </div>
                                 <div class="box_select mt-2">
@@ -349,12 +418,12 @@
                                 </div>
                             </div>
                             <div class="box_select mt-2">
-                                <label for="salary">Salary</label>
-                                <input type="number" id="salary" class="form-control form-control-sm" name="salary" min="0">
+                                <label for="salary_amount">Salary</label>
+                                <input type="number" id="salary_amount" class="form-control form-control-sm" name="salary" min="0">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                            <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel" />
                             <input type="submit" class="btn btn-info" value="Save" />
                         </div>
                     </form>
@@ -384,120 +453,145 @@
         </div>
         <!-- End Delete Modal -->
 
-
-            <script type="text/javascript">
-                $(document).ready(function () {
+        <script type="text/javascript">
+            $(document).ready(function () {
+            
+                // Show PerPage column
+                $('#paginationSelect').change(function() {
+                    window.location.href = "{{ route('employees') }}?Page=" + $(this).val();
+                });
                 
-                    // Show PerPage column
-                    $('#paginationSelect').change(function() {
-                        window.location.href = "{{ route('employees') }}?Page=" + $(this).val();
-                    });
-                    
-                    // Activate tooltip
-                    $('[data-toggle="tooltip"]').tooltip();
+                // Activate tooltip
+                $('[data-toggle="tooltip"]').tooltip();
 
-                    // Select/Deselect checkboxes
-                    var checkbox = $('table tbody input[type="checkbox"]');
-                    $("#selectAll").click(function () {
-                        if (this.checked) {
-                            checkbox.each(function () {
-                                this.checked = true;
-                            });
-                        } else {
-                            checkbox.each(function () {
-                                this.checked = false;
-                            });
-                        }
-                    });
-                    checkbox.click(function () {
-                        if (!this.checked) {
-                            $("#selectAll").prop("checked", false);
-                        }
-                    });
-                    
-
-                    // Generate delte ID in MODAL
-                    $(document).on('click', '.delete', function(e) {
-                        e.preventDefault();
-                        var id = $(this).data('id');
-                        $('#deleteEmployeeModal').modal('show');
-                        $('#delete_member').val(id);
-                    });
-                    
-                    // Edit data
-                    $('.edit').click(function () {
-                        let id = $(this).data('id');
-                        
-                        $.ajax({
-                            url: '/edit/' + id,
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log(data);
-                                $('#full_name').val(data.full_name);
-                                $('#email').val(data.email);
-                                $('#country').val(data.country);
-                                $('#city').val(data.city);
-                                $('#address').val(data.address);
-                                $('#gender').val(data.gender_id); 
-                                $('#company').val(data.company_id); 
-                                $('#director').val(data.super_visor_id);
-                                $('#position').val(data.position_id);
-                                // $('#salary').val(data.salary); 
-                                   
-                            }
-                        })
-                        // $('full_name').val()
-                    })
-
-                    // Delete data
-                    $('#delete_member').click(function() {
-                        var id = $(this).val();
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: '/delete/' + id,
-                            type: 'DELETE',
-                            dataType: 'json',
-                            success: function(data) {
-                                $('tr[data-id="' + id + '"]').remove();
-                                $('#deleteEmployeeModal').modal('hide');
-                            }
+                // Select/Deselect checkboxes
+                var checkbox = $('table tbody input[type="checkbox"]');
+                $("#selectAll").click(function () {
+                    if (this.checked) {
+                        checkbox.each(function () {
+                            this.checked = true;
                         });
-                    })
-                    
-                    // Search data
-                    function performSearch() {
-                        var value = $('#search').val();
-                        
-                        $.ajax({
-                            type: 'GET',
-                            url: '{{ route('search_employee') }}',
-                            data: {'search': value},
-                            success:function(data) {
-                                console.log(data);
-                                $('.table_tbody').html(data);
-                            }
+                    } else {
+                        checkbox.each(function () {
+                            this.checked = false;
                         });
                     }
+                });
 
+                checkbox.click(function () {
+                    if (!this.checked) {
+                        $("#selectAll").prop("checked", false);
+                    }
+                });
+                
 
-                    $('#searchBtn').click(function() {
-                        if($('#search').val() != '') {
-                            performSearch();
-                        } else {
-                            $('#search').focus()
+                // Generate delte ID in MODAL
+                $(document).on('click', '.delete', function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    $('#deleteEmployeeModal').modal('show');
+                    $('#delete_member').val(id);
+                });
+                
+
+                // Delete data
+                $('#delete_member').click(function() {
+                    var id = $(this).val();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: '/delete/' + id,
+                        type: 'DELETE',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('tr[data-id="' + id + '"]').remove();
+                            $('#deleteEmployeeModal').modal('hide');
                         }
                     });
+                })
 
 
-                    $('#search').keypress(function(event) {
-                        if (event.which == 13) {
-                            performSearch();
+                // Edit data
+                $(document).on('click', '.edit', function () {
+                    let id = $(this).data('id');
+                    
+                    $.ajax({
+                        url: '/edit/' + id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            $('tr[data-id="' + data.id + '"]');
+                            $('#edit_id').val(data.id);
+                            $('#full_name').val(data.full_name);
+                            $('#email').val(data.email);
+                            $('#country').val(data.country);
+                            $('#city').val(data.city);
+                            $('#address').val(data.address);
+                            $('#company').val(data.company_id); 
+                            $('#director').val(data.super_visor_id);
+                            $('#position').val(data.position_id);
+                            $('#salary_amount').val(data.salary.amount); 
+                            $('#gender').val(data.gender_id);
+
+                            // Select the option for gender
+                            $('#gender option[value="' + data.gender_id + '"]').prop('selected', true);
+
+                            // Select the option for company
+                            $('#company option[value="' + data.company_id + '"]').prop('selected', true);
+
+                            // Select the option for director
+                            $('#director option[value="' + data.super_visor_id + '"]').prop('selected', true);
+
+                            // Select the option for position
+                            $('#position option[value="' + data.position_id + '"]').prop('selected', true);
+                        }
+                    })
+                })
+
+                // Update data
+                $(document).on('submit', '#edit_form', function () {
+                    let id = $('#edit_id').val();
+                    let actionRoute = "{{ route('employee_update', ':id') }}".replace(':id', id);
+                    $(this).attr('action', actionRoute);
+                })
+                
+                // Search data
+                function performSearch() {
+                    var value = $('#search').val();
+                    
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route('search_employee') }}',
+                        data: {'search': value},
+                        success:function(data) {
+                            $('.table_tbody').html(data);
                         }
                     });
-            });
+                }
+
+
+                $('#searchBtn').click(function() {
+                    if($('#search').val() != '') {
+                        performSearch();
+                    } else {
+                        $('#search').focus()
+                    }
+                });
+
+
+                $('#search').keypress(function(event) {
+                    if (event.which == 13) {
+                        performSearch();
+                    }
+                });
+
+                $(document).on('click', '#sort_by', function () {
+                    let text = $(this).text();
+                    console.log(text);
+                })
+        }); 
         </script>
 
     </body>

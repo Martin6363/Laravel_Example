@@ -28,7 +28,7 @@ aside {
     border-radius: 5px;
 }
 
-.nav-item:nth-child(4) {
+.nav-item:nth-child(3) {
     background-color: rgb(0, 0, 182);
     border-left: 3px solid #f3f3f3;
 }

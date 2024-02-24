@@ -7,18 +7,13 @@
                 </a>
                 <ul class="nav nav-pilis flex-column mt-2">
                     <li class="nav-item">
-                        <a href="" class="nav-link text-white" aria-current="page">
-                            <i class="fs-6 fa fa-gauge"></i><span class="fs-4 d-none ms-3 d-sm-inline">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link text-white" aria-current="page">
+                        <a href="/" class="nav-link text-white" aria-current="page">
                             <i class="fs-6 fa fa-house"></i><span class="fs-4 d-none ms-3 d-sm-inline">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="" class="nav-link text-white" aria-current="page">
-                            <i class="fs-6 fa fa-table-list"></i><span class="fs-4 d-none ms-3 d-sm-inline">Articles</span>
+                            <i class="fs-6 fa fa-gauge"></i><span class="fs-4 d-none ms-3 d-sm-inline">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
